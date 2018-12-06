@@ -7,6 +7,11 @@
     - 'zookeeper'
     - 'zookeeperd'
 
+- name: Remove if available upstart service
+  file:
+    path: '/etc/init.d/zookeeper'
+    state: absent
+
 - name: create systemd service
   template:
     src: 'zookeeper.service.j2'
@@ -14,7 +19,5 @@
   notify:
     - Restart zookeeper
 
-- name: Remove if available upstart service
-  file:
-    path: '/etc/init.d/zookeeper'
-    state: absent
+- name: Ensure that Zookeeper is running
+  service: "name=zookeeper enabled=yes state=started"
