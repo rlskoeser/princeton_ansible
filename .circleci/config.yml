@@ -27,6 +27,9 @@ jobs:
       - attach_workspace:
           at: '~/princeton_ansible'
       - run:
+          name: Upgrade pyenv
+          command: cd $(pyenv root) && git pull && cd -
+      - run:
           name: Install the Python version
           command: pyenv install $PYTHON_VERSION
       - run:
@@ -50,6 +53,9 @@ jobs:
     steps:
       - attach_workspace:
           at: '~/princeton_ansible'
+      - run:
+          name: Upgrade pyenv
+          command: cd $(pyenv root) && git pull && cd -
       - run:
           name: Install the Python version
           command: pyenv install $PYTHON_VERSION
