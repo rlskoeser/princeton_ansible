@@ -34,7 +34,7 @@ jobs:
           command: cd $(pyenv root) && git pull && cd -
       - run:
           name: Install the Python version
-          command: pyenv install $PYTHON_VERSION
+          command: CFLAGS=-I/usr/include/openssl LDFLAGS=-L/usr/lib pyenv install $PYTHON_VERSION
       - run:
           name: Set the desired Python version as the desired Python version
           command: pyenv global $PYTHON_VERSION
@@ -67,7 +67,7 @@ jobs:
           command: cd $(pyenv root) && git pull && cd -
       - run:
           name: Install the Python version
-          command: pyenv install $PYTHON_VERSION
+          command: CFLAGS=-I/usr/include/openssl LDFLAGS=-L/usr/lib pyenv install $PYTHON_VERSION
       - run:
           name: Set the desired Python version as the desired Python version
           command: pyenv global $PYTHON_VERSION
