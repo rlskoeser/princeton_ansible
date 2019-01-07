@@ -22,9 +22,16 @@ jobs:
     environment:
       ROLE_NAME: pulibrary.apache2
       MOLECULE_DISTRO: ubuntu1604
+      PYTHON_VERSION: 3.7.2
     steps:
       - attach_workspace:
           at: '~/princeton_ansible'
+      - run:
+          name: Install the Python version
+          command: pyenv install $PYTHON_VERSION
+      - run:
+          name: Set the desired Python version as the desired Python version
+          command: pyenv global $PYTHON_VERSION
       - run:
           name: Install module requirements
           command: pip install -r requirements.txt
@@ -39,9 +46,16 @@ jobs:
     environment:
       ROLE_NAME: pulibrary.apache2
       MOLECULE_DISTRO: ubuntu1804
+      PYTHON_VERSION: 3.7.2
     steps:
       - attach_workspace:
           at: '~/princeton_ansible'
+      - run:
+          name: Install the Python version
+          command: pyenv install $PYTHON_VERSION
+      - run:
+          name: Set the desired Python version as the desired Python version
+          command: pyenv global $PYTHON_VERSION
       - run:
           name: Install module requirements
           command: pip install -r requirements.txt
