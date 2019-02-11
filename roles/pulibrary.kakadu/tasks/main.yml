@@ -9,10 +9,10 @@
   become: true
 - name: Download Kakadu
   unarchive:
-    src: http://kakadusoftware.com/wp-content/uploads/2014/06/KDU78_Demo_Apps_for_Linux-x86-64_160226.zip
+    src: http://kakadusoftware.com/wp-content/uploads/2014/06/KDU7A2_Demo_Apps_for_Ubuntu-x86-64_170827.zip
     copy: no
     dest: '{{ kdu_install }}'
-    creates: '{{ kdu_install }}/KDU78_Demo_Apps_for_Linux-x86-64_160226/kdu_compress'
+    creates: '{{ kdu_install }}/KDU7A2_Demo_Apps_for_Ubuntu-x86-64_170827/kdu_compress'
   become: true
 
 - name: Set Default Symlink
