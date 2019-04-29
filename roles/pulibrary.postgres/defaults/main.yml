@@ -1,2 +1,9 @@
 ---
 postgresql__upstream_apt_repo: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+postgresql__upstream_key_id: "B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8"
+postgres_host: "{{ vault_postgres_staging_host | default('localhost') }}"
+postgres_admin_user: "postgres"
+postgres_admin_password: "{{ vault_postgres_admin_password | default('change_me') }}"
+application_dbuser: []
+application_dbuser_password: []
+application_dbuser_role_attr_flags: "SUPERUSER"

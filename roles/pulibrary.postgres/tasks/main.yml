@@ -15,7 +15,7 @@
 - name: Get default PostgreSQL version
   environment:
     LC_ALL: 'C'
-  command: "apt-cache policy postgresql-client | grep -E '^\\s+Candidate:\\s+' | awk '{print $2}' | cut -d+ -f1"
+  shell: "apt-cache policy postgresql-client | grep -E '^\\s+Candidate:\\s+' | awk '{print $2}' | cut -d+ -f1"
   register: postgresql__register_version
   changed_when: false
 
@@ -28,7 +28,7 @@
 - name: Check if database server is installed
   environment:
     LC_MESSAGES: 'C'
-  command: dpkg-query -W -f='${Version}\n' 'postgresql' | grep -v '^$'
+  shell: dpkg-query -W -f='${Version}\n' 'postgresql' | grep -v '^$'
   register: postgresql__register_server
   changed_when: false
   failed_when: false
@@ -38,6 +38,7 @@
     login_host: "{{ postgres_host }}"
     login_user: "{{ postgres_admin_user }}"
     login_password: "{{ postgres_admin_password }}"
+    name: "{{ application_dbuser }}"
     password: "{{ application_dbuser_password }}"
     encrypted: true
     role_attr_flags: "{{ application_dbuser_role_attr_flags }}"
