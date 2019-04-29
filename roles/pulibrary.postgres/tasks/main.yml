@@ -1,3 +1,56 @@
 ---
-# tasks file for roles/pulibrary.postgres
+- name: Add upstream PostgreSQL APT key
+  apt_key:
+    id: "{{ postgresql__upstream_key_id }}"
+    state: "present"
+    keyserver: "hkp://pool.sks-keyservers.net"
+  register: postgresql__register_apt_key
+
+- name: Add upstream PostgreSQL APT repository
+  apt_repository:
+    repo: "{{ postgresql__upstream_apt_repo }}"
+    state: "present"
+    update_cache: true
+
+- name: Get default PostgreSQL version
+  environment:
+    LC_ALL: 'C'
+  command: "apt-cache policy postgresql-client | grep -E '^\\s+Candidate:\\s+' | awk '{print $2}' | cut -d+ -f1"
+  register: postgresql__register_version
+  changed_when: false
+
+- name: Install PostgreSQL packages
+  apt:
+    name: ["postgresql-client", "python-psycopg2"]
+    state: "present"
+    install_recommends: false
+
+- name: Check if database server is installed
+  environment:
+    LC_MESSAGES: 'C'
+  command: dpkg-query -W -f='${Version}\n' 'postgresql' | grep -v '^$'
+  register: postgresql__register_server
+  changed_when: false
+  failed_when: false
+
+- name: Create PostgreSQL roles
+  postgresql_user:
+    login_host: "{{ postgres_host }}"
+    login_user: "{{ postgres_admin_user }}"
+    login_password: "{{ postgres_admin_password }}"
+    password: "{{ application_dbuser_password }}"
+    encrypted: true
+    role_attr_flags: "{{ application_dbuser_role_attr_flags }}"
+    state: "present"
+
+- name: Create PostgreSQL databases
+  postgresql_db:
+    name: "{{ application_db_name }}"
+    login_host: "{{ postgres_host }}"
+    login_user: "{{ postgres_admin_user }}"
+    login_password: "{{ postgres_admin_password }}"
+    encoding: "UTF-8"
+    owner: "{{ application_dbuser_name }}"
+    state: "present"
+
 - include: readonly_user.yml
