@@ -19,6 +19,10 @@
   register: postgresql__register_version
   changed_when: false
 
+- name: Set default PostgreSQL version variable
+  set_fact:
+    postgresql__version: "{{ postgresql__preferred_version }}"
+
 - name: Install PostgreSQL packages
   apt:
     name: ["postgresql-client", "python-psycopg2"]
