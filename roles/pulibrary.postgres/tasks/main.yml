@@ -15,7 +15,11 @@
 - name: Get default PostgreSQL version
   environment:
     LC_ALL: 'C'
-  shell: "apt-cache policy postgresql-client | grep -E '^\\s+Candidate:\\s+' | awk '{print $2}' | cut -d+ -f1"
+  shell: |
+    set -o pipefail
+    "apt-cache policy postgresql-client | grep -E '^\\s+Candidate:\\s+' | awk '{print $2}' | cut -d+ -f1"
+  args:
+    executable: /bin/bash
   register: postgresql__register_version
   changed_when: false
 
@@ -32,7 +36,11 @@
 - name: Check if database server is installed
   environment:
     LC_MESSAGES: 'C'
-  shell: dpkg-query -W -f='${Version}\n' 'postgresql' | grep -v '^$'
+  shell: |
+    set -o pipefail
+    dpkg-query -W -f='${Version}\n' 'postgresql' | grep -v '^$'
+  args:
+    executable: /bin/bash
   register: postgresql__register_server
   changed_when: false
   failed_when: false
