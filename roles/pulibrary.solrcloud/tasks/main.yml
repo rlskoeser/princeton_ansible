@@ -1,16 +1,16 @@
 ---
 ## Install the system package dependencies
 - name: Install dependencies
-  apt: name={{item}} state=present
-  with_items:
-    - nfs-common
+  apt:
+    name: ["nfs-common"]
+    state: present
   tags:
     - mnt
 
 ## Create the mount for the Solr backup network share
 - name: Create mount directories
   file:
-    path: '/mnt/{{item}}'
+    path: '/mnt/{{ item }}'
     state: 'directory'
   with_items:
     - solrbackup
