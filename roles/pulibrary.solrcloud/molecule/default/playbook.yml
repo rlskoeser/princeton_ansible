@@ -1,5 +1,11 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    - run_not_in_container: false
+    - zookeeper_hosts: "all"
+    - lib_zk1_host_name: "instance"
+    - lib_zk2_host_name: "instance"
+    - lib_zk3_host_name: "instance"
   roles:
     - role: pulibrary.solrcloud

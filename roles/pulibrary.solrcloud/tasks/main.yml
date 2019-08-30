@@ -26,6 +26,7 @@
     state: mounted
   tags:
     - mnt
+  when: run_not_in_container
 
 - name: update host file
   lineinfile:
@@ -35,11 +36,12 @@
     state: present
   become: true
   loop:
-    - {hostname: '{{ lib_zk1_host_name }}.princeton.edu', address: "{{ lib_zk1_host }}"}
-    - {hostname: '{{ lib_zk2_host_name }}.princeton.edu', address: "{{ lib_zk2_host }}"}
-    - {hostname: '{{ lib_zk3_host_name }}.princeton.edu', address: "{{ lib_zk3_host }}"}
+    - {hostname: '{{ lib_zk1_host_name }}.princeton.edu', address: "{{ lib_zk1_host_name }}"}
+    - {hostname: '{{ lib_zk2_host_name }}.princeton.edu', address: "{{ lib_zk2_host_name }}"}
+    - {hostname: '{{ lib_zk3_host_name }}.princeton.edu', address: "{{ lib_zk3_host_name }}"}
   tags:
     - hosts
+  when: run_not_in_container
 
 - name: solr cloud install node
   include: install.yml
