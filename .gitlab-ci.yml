@@ -1,0 +1,4 @@
+job1:
+  image: quay.io/ansible/molecule:2.22rc3
+  script:
+    - cd roles/pulibrary.apache2 && molecule test
