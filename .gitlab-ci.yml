@@ -1,4 +1,26 @@
-job1:
-  image: quay.io/ansible/molecule:2.22rc3
+---
+image: quay.io/ansible/molecule:2.22rc3
+services:
+  - docker:dind
+
+stages:
+  - tests
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip"
+
+
+before_script:
+  - docker -v
+  - python -V
+  - ansible --version
+  - molecule --version
+
+pulibrary-roles:
+  stage: tests
+  variables:
+    DOCKER_HOST: "tcp://docker:2375"
+    PY_COLORS: 1
   script:
-    - cd roles/pulibrary.apache2 && molecule test
+    - cd roles/**/*
+    - molecule test
