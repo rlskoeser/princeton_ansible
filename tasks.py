@@ -37,7 +37,7 @@ def test(command):
     # Unfortunately, these still need to block for the process status code to be
     #   returned (please see https://docs.python.org/3/library/os.html#os.spawnvp)
     for role_path in roles_subset:
-        role_molecule_command_args = ["/usr/bin/env molecule", "test"]
+        role_molecule_command_args = ["molecule", "test"]
         completed = subprocess.run(role_molecule_command_args, cwd=role_path)
         status = completed.returncode
 
