@@ -11,6 +11,9 @@ molecule = "*"
 ansible = "==2.7.11"
 docker = "*"
 invoke = "*"
+pytest-molecule = "*"
+tox = "*"
+tox-pipenv = "*"
 
 [requires]
 python_version = "3.7"

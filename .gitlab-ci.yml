@@ -1,0 +1,11 @@
+image: "quay.io/ansible/molecule:2.22"
+
+before_script:
+  - apk add linux-headers musl-dev gcc libffi-dev libressl-dev make
+  - python -V
+  - pip install pipenv
+  - pipenv install
+
+run:
+  script: invoke test
+  parallel: 4
