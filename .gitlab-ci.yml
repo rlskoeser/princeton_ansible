@@ -7,5 +7,5 @@ before_script:
   - pipenv install
 
 run:
-  script: invoke test
+  script: pipenv run invoke test
   parallel: 4
