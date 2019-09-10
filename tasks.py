@@ -4,6 +4,8 @@ from invoke import task
 import os
 from pathlib import Path
 import subprocess
+import sys
+
 
 @task
 def test(command):
@@ -40,12 +42,12 @@ def test(command):
         role_molecule_command_args = ["molecule", "test"]
         completed = subprocess.run(role_molecule_command_args, cwd=role_path)
         status = completed.returncode
-
         statuses.append(status)
 
     # Reduce the status of each
     exit_status = reduce((lambda u, v: u | v), statuses)
-    return exit_status
+    sys.exit(exit_status)
+
 
 @task
 def molecularize(command, role):

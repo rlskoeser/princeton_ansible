@@ -5,7 +5,8 @@ services:
   - docker:dind
 
 before_script:
-  - apk add linux-headers musl-dev gcc libffi-dev libressl-dev make
+  - apk update
+  - apk add --no-cache linux-headers musl-dev gcc libffi-dev libressl-dev make
   - docker -v
   - python -V
   - pip install pipenv
@@ -13,9 +14,9 @@ before_script:
   - ansible --version
   - molecule --version
 
-variables:
-  DOCKER_HOST: "tcp://docker:2375"
-
-run:
+pulibrary-roles:
+  stage: test
+  variables:
+    DOCKER_HOST: "tcp://docker:2375"
   script: pipenv run invoke test
   parallel: 4
