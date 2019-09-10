@@ -18,13 +18,13 @@ def test(command):
 
     # The parallelism setting
     if 'CI_NODE_TOTAL' in os.environ:
-        batch_size = os.environ['CI_NODE_TOTAL']
+        batch_size = int(os.environ['CI_NODE_TOTAL'])
     else:
         batch_size = len(role_paths)
 
     # The job index passed by the current CI build environment
     if 'CI_NODE_INDEX' in os.environ:
-        job_index = os.environ['CI_NODE_INDEX']
+        job_index = int(os.environ['CI_NODE_INDEX'])
     else:
         job_index = 0
 
