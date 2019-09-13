@@ -1,3 +1,21 @@
 ---
 run_not_in_container: false
 bibdata_db_host: '{{ maria_db_cluster_host | default("localhost")}}'
+
+db_port: 3306
+
+bibdata_db:
+  user: "{{ bibdata_db_username }}"
+  password: "{{ bibdata_db_password }}"
+  name: "{{ bibdata_db }}"
+
+mariadb__users:
+  - name: "{{ bibdata_db_username }}"
+    host: "%"
+    password: "{{ bibdata_db_password }}"
+    priv: "{{ bibdata_db }}.*:ALL"
+
+mariadb__databases:
+  - name: "{{ bibdata_db }}"
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci

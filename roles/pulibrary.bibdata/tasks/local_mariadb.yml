@@ -16,3 +16,43 @@
     login_host: '{{ bibdata_db_host }}'
     login_password: '{{ bibdata_db_password }}'
     login_user: '{{ bibdata_db_username }}'
+
+- name: Create databases
+  mysql_db:
+    name: "{{ item.database | d(item.name) }}"
+    login_host: '{{ db_host | default(omit) }}'
+    login_password: '{{ db_password | default(omit) }}'
+    login_user: 'root'
+    state: present
+    encoding: "{{ item.encoding | d(omit) }}"
+    collation: "{{ item.collation | d(omit) }}"
+  with_flattened: "{{ mariadb__databases + mariadb__dependent_databases + mariadb_databases|d([]) }}"
+  delegate_to: "{{ mariadb__delegate_to }}"
+  when: ((item.database|d(false) or item.name|d(false)) and
+         (item.state is undefined or item.state != 'absent'))
+  register: mariadb__register_database_status
+
+- name: Create user accounts
+  mysql_user:
+    name: '{{ item.user | d(item.name) }}'
+    host: '{{ item.host | default(mariadb__client) }}'
+    # TODO For some strange reason this works if no host is provided when connecting to percona
+    #      It does not work if the host (maria-staging1) is provided (Error about access)
+    #      Id does not work if the host (maria-staging) is provided (an ssh error)
+    login_host: '{{ db_host | default(omit) }}'
+    login_password: '{{ db_password | default(omit) }}'
+    login_user: 'root'
+    state: 'present'
+    password: "{{ item.password }}"
+    # todo A future enhancement to utilize secret delegation
+    # password: '{{ item.password | default(lookup("password",
+    #               secret + "/mariadb/" + mariadb__delegate_to +
+    #               "/credentials/" + item.user | d(item.name) + "/password " +
+    #               "length=" + mariadb__password_length)) }}'
+  with_flattened: '{{ mariadb__users + mariadb__dependent_users + mariadb_users|d([]) }}'
+  delegate_to: '{{ mariadb__delegate_to }}'
+  register: mariadb__register_create_users
+  when: ((item.user|d(False) or item.name|d(False)) and
+         (item.state is undefined or item.state != "absent"))
+  no_log: true
+

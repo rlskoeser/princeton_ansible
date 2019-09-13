@@ -8,6 +8,7 @@ jobs:
       matrix:
         role:
           - pulibrary.approvals
+          - pulibrary.bibdata
           - pulibrary.drupal
           - pulibrary.libwww
           - pulibrary.locator
