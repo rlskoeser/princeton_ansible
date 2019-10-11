@@ -1,0 +1,13 @@
+---
+application_db_name: '{{pulfa_db_name}}'
+application_dbuser_name: '{{pulfa_db_user}}'
+application_dbuser_password: '{{pulfa_db_password}}'
+application_dbuser_role_attr_flags: 'SUPERUSER'
+application_host_protocol: 'https'
+existdb_app_vars:
+  - name: SOLR_URL
+    value: '{{pulfa_staging_solr_url}}'
+  - name: APPLICATION_HOST
+    value: '{{pulfa_host_name}}'
+  - name: APPLICATION_HOST_PROTOCOL
+    value: '{{application_host_protocol}}'

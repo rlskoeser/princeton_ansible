@@ -1,0 +1,7 @@
+---
+- name: install the dependencies
+  apt:
+    name: software-properties-common
+    state: present
+    update_cache: true
+
