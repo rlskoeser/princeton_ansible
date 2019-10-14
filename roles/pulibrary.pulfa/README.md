@@ -14,6 +14,12 @@ _To be drafted_
 
 _To be drafted_
 
+Please download the preconfigured eXistdb installation used for the PULFA from [https://raw.githubusercontent.com/pulibrary/pulfa-extras/master/exist-1.4.3-configured.tgz]
+
+Please download the custom Solr installation from [https://raw.githubusercontent.com/pulibrary/pulfa-extras/master/solr.tgz]
+
+Copy these into the `local_files/pulibrary.pulfa` directory.
+
 ### Example Playbook
 
 ```yaml

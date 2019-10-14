@@ -5,3 +5,106 @@
     state: present
     update_cache: true
 
+- name: install the PULFA dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items:
+    - apache2
+    - default-jre
+    - default-jdk
+
+- name: Copy the apache2 VirtualHost
+  template:
+    dest: /etc/apache2/sites-available/000-default.conf
+    src: 000-default.conf
+
+- name: Create the eXistdb group
+  group:
+    name: existdb
+    state: present
+
+- name: Create the eXistdb user
+  user:
+    name: existdb
+    comment: "eXistdb System User"
+    group: existdb
+
+- name: Create the directories for eXistdb
+  file:
+    path: "{{ item }}"
+    state: directory
+    group: existdb
+    owner: existdb
+  with_items:
+    - /var/lib/existdb
+    - /var/log/existdb
+    - /var/run/existdb
+
+- name: Download the eXistdb configuration
+  unarchive:
+    src: "local_files/pulibrary.pulfa/exist-1.4.3-configured.tgz"
+    dest: /usr/local/lib
+    owner: existdb
+    group: existdb
+
+- name: Create the directories for the custom Solr installation
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /opt/apache/solr
+    - /var/log/solr
+
+- name: Create the Solr group
+  group:
+    name: solr
+    state: present
+
+- name: Create the solr user
+  user:
+    name: solr
+    group: solr
+    home: /opt/apache/solr
+    shell: "/sbin/false"
+    comment: "Apache Solr System User"
+
+- name: Set the ownership for the directories for the Solr installation
+  file:
+    path: "{{ item }}"
+    state: directory
+    group: solr
+    owner: solr
+  with_items:
+    - /opt/apache/solr
+    - /var/log/solr
+
+- name: Download the Solr configuration
+  unarchive:
+    src: "local_files/pulibrary.pulfa/solr.tgz"
+    dest: /opt/apache
+    owner: solr
+    group: solr
+
+- name: Copy the Jetty configuration
+  template:
+    dest: /etc/default/jetty
+    src: jettyconfig
+
+- name: Create the sym. link for the systemd service
+  file:
+    state: link
+    dest: /etc/init.d/solr
+    src: /opt/apache/solr/jetty.sh
+
+- name: Start the eXistdb server
+  command: /usr/local/lib/exist/bin/startup.sh &
+  become: true
+  become_user: existdb
+
+- name: Register the solr service
+  sysvinit:
+    name: solr
+    state: started
+    enabled: yes
