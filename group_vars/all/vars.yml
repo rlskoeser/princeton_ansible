@@ -69,3 +69,4 @@ maria_db_cluster_host: '{{ vault_maria_db_cluster_host }}'
 # change the libwww role to use this???
 percona_xtra_root_password: '{{ vault_xtradb_root_password }}'
 percona_xtra_cluster_host: 'maria-staging'
+gcp_solr_url: 'http://130.168.245.35.bc.googleusercontent.com:8983/solr'

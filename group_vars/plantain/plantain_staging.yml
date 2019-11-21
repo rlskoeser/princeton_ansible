@@ -38,6 +38,7 @@ subversion_pulfa_repo: '{{vault_subversion_pulfa_repo}}'
 subversion_pulfa_dir_path: '/var/opt/pulfa'
 subversion_pulfa_username: '{{vault_subversion_pulfa_username}}'
 subversion_pulfa_password: '{{vault_subversion_pulfa_password}}'
+plantain_solr_url: '{{gcp_solr_url}}/plantain-staging'
 rails_app_vars:
   - name: PLANTAIN_SECRET_KEY_BASE
     value: '{{vault_plantain_staging_secret_key}}'
@@ -54,7 +55,7 @@ rails_app_vars:
   - name: APPLICATION_HOST_PROTOCOL
     value: '{{application_host_protocol}}'
   - name: SOLR_URL
-    value: "http://localhost:8983/solr/{{ plantain_solr_core }}"
+    value: '{{plantain_solr_url}}'
   - name: HONEYBADGER_API_KEY
     value: '{{plantain_honeybadger_key}}'
 sidekiq_worker_name: plantain-workers
