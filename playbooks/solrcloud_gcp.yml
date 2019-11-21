@@ -1,0 +1,13 @@
+---
+# --skip-tags mnt
+# add the above command line option to run this playbook
+# no shared backup is configured
+- hosts: solrcloudgcp
+  remote_user: pulsys
+  become: true
+  vars_files:
+    - ../site_vars.yml
+    - ../group_vars/solrcloud/vault.yml
+    - ../group_vars/solrcloud/solrcloud_gcp.yml
+  roles:
+    - role: roles/pulibrary.solrcloud

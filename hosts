@@ -89,6 +89,10 @@ lib-zk3.princeton.edu
 lib-zk-staging1.princeton.edu
 lib-zk-staging2.princeton.edu
 lib-zk-staging3.princeton.edu
+[zookeepergcp]
+35.221.25.223
+35.245.124.64
+35.199.46.224
 [solrcloud]
 lib-solr1.princeton.edu
 lib-solr2.princeton.edu
@@ -97,6 +101,10 @@ lib-solr3.princeton.edu
 lib-solr-staging1.princeton.edu
 lib-solr-staging2.princeton.edu
 lib-solr-staging3.princeton.edu
+[solrcloudgcp]
+35.245.37.195
+35.245.45.92
+35.230.169.201
 [ojs]
 ojs-staging1.princeton.edu
 [circleci]
