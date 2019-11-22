@@ -16,6 +16,5 @@ galaxy_info:
         - 18.04
 dependencies:
   - role: 'pulibrary.redis'
-  - role: 'pulibrary.solr'
   - role: 'pulibrary.blacklight-app'
   - role: 'pulibrary.sidekiq_worker'
